@@ -1,10 +1,14 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+pub mod domain;
+pub mod app;
+pub mod errors;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    //use super::*;
+
+    fn add(left: usize, right: usize) -> usize {
+        left + right
+    }
 
     #[test]
     fn it_works() {
