@@ -6,6 +6,8 @@ use axum::{
     routing::{get, post},
     Router,
 };
+use hyper::header::CONTENT_TYPE;
+use tower_http::cors::{Any, CorsLayer};
 use tracing::debug;
 
 use my_todo as lib;
@@ -23,6 +25,12 @@ fn create_app(repository: impl TodoRepository) -> Router {
             get(find_todo).delete(delete_todo).patch(update_todo),
         )
         .with_state(Arc::new(repository))
+        .layer(
+            CorsLayer::new()
+                .allow_origin(["http://localhost:3001".parse().unwrap()])
+                .allow_methods(Any)
+                .allow_headers(vec![CONTENT_TYPE]),
+        )
 }
 
 #[tokio::main]
